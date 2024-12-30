@@ -8,7 +8,7 @@ import { Button } from "@/components/ui/button";
 
 interface UserFormProps {
   initialData?: UserData;
-  onSubmit: (data: UserData) => Promise<string | null>;
+  onSubmit: (data: UserData) => void;
   onCancel?: () => void;
 }
 
@@ -29,8 +29,7 @@ const UserForm: React.FC<UserFormProps> = ({
       return;
     }
     setErrors("");
-    const serverError = await onSubmit(formData);
-    if (serverError) setErrors(serverError);
+    await onSubmit(formData);
   };
 
   return (

@@ -31,8 +31,12 @@ const AddUserDialog: React.FC<AddUserDialogProps> = ({ onAddUser }) => {
         </DialogHeader>
         <UserForm
           onSubmit={async (data) => {
-            const error = await onAddUser(data);
-            return error;
+            const response = await onAddUser(data);
+            console.log(response);
+            if (response) {
+              setIsDialogOpen(false); // Close dialog on success
+            }
+            // return response;
           }}
           onCancel={() => setIsDialogOpen(false)}
         />

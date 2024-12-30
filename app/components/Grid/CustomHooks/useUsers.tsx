@@ -12,7 +12,9 @@ export const useUsers = () => {
     queryFn: async () => {
       const res = await fetch("/api/users");
       if (!res.ok) {
-        throw new Error("Failed to fetch users");
+        const errorData = await res.json();
+        alert(errorData.error || "Failed to fetch users");
+        return [];
       }
       return res.json();
     },
@@ -29,7 +31,8 @@ export const useUsers = () => {
       });
       if (!res.ok) {
         const errorData = await res.json();
-        throw new Error(errorData.error || "Failed to add user");
+        alert(errorData.error || "Failed to add user");
+        return null;
       }
       return res.json();
     },
@@ -48,7 +51,9 @@ export const useUsers = () => {
         body: JSON.stringify({ id }),
       });
       if (!res.ok) {
-        throw new Error("Failed to delete user");
+        const errorData = await res.json();
+        alert(errorData.error || "Failed to delete user");
+        return null;
       }
       return res.json();
     },
@@ -67,7 +72,9 @@ export const useUsers = () => {
         body: JSON.stringify(user),
       });
       if (!res.ok) {
-        throw new Error("Failed to update user");
+        const errorData = await res.json();
+        alert(errorData.error || "Failed to update user");
+        return null;
       }
       return res.json();
     },
