@@ -47,8 +47,10 @@ const UserCard: React.FC<UserCardProps> = ({ user }) => {
     updatedData: UserData
   ): Promise<string | null> => {
     try {
-      await updateUser(updatedData);
-      setIsDialogOpen(false); // Close dialog on success
+      const response = await updateUser(updatedData);
+      if (response) {
+        setIsDialogOpen(false); // Close dialog on success
+      }
       return null;
     } catch (error) {
       console.error("Error updating user:", error);
