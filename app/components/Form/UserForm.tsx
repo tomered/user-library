@@ -62,7 +62,6 @@ const UserForm: React.FC<UserFormProps> = ({
         value={formData.email}
         onChange={handleChange}
         placeholder="Email"
-        type="email"
       />
       <UserFormAddress formData={formData} handleChange={handleChange} />
 
