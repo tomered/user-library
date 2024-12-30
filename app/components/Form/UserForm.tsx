@@ -36,7 +36,7 @@ const UserForm: React.FC<UserFormProps> = ({
   return (
     <form
       onSubmit={handleSubmit}
-      className="space-y-4 overflow-y-auto max-h-[calc(100vh-150px)] p-4 pb-16"
+      className="space-y-4 overflow-y-auto h-[calc(100vh-150px)] max-h-[calc(100vh-150px)] p-4 pb-16"
     >
       {errors && <div className="text-red-600 text-sm">{errors}</div>}
       <FormField
