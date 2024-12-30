@@ -2,62 +2,14 @@ import { NextResponse } from "next/server";
 import axios from "axios";
 import { MockDatabase, User } from "@/app/types";
 import { v4 as uuidv4 } from "uuid";
+import { transformRawUser, transformToRawUser } from "@/app/utils";
 
-// @ts-ignore
 const mockDatabase: MockDatabase = {
   initialized: false,
   users: [],
 };
 
-const transformToRawUser = (user: any) => {
-  return {
-    name: {
-      title: user.name?.title || "Mr",
-      first: user.name?.first || "",
-      last: user.name?.last || "",
-    },
-    email: user.email || "",
-    picture: {
-      medium:
-        "https://www.gravatar.com/avatar/2c7d99fe281ecd3bcd65ab915bac6dd5?s=250", // Set the picture field to a template image
-    },
-    location: {
-      country: user.location?.country || "",
-      city: user.location?.city || "",
-      street: {
-        number: user.location?.street?.number || "",
-        name: user.location?.street?.name || "",
-      },
-    },
-    login: {
-      uuid: user.id || "",
-    },
-  };
-};
-
-const transformRawUser = (rawUser: any) => {
-  return {
-    name: {
-      title: rawUser.name?.title,
-      first: rawUser.name?.first,
-      last: rawUser.name?.last,
-    },
-    email: rawUser.email,
-    picture: rawUser.picture?.medium,
-    location: {
-      country: rawUser.location?.country,
-      city: rawUser.location?.city,
-      street: {
-        number: rawUser.location?.street?.number,
-        name: rawUser.location?.street?.name,
-      },
-    },
-    id: rawUser.login.uuid,
-  };
-};
-
 export async function GET() {
-  console.log("get initialized", mockDatabase.initialized);
   if (!mockDatabase.initialized) {
     try {
       const response = await axios.get<{ results: User[] }>(
@@ -66,7 +18,6 @@ export async function GET() {
 
       const users = response.data.results.map(transformRawUser);
 
-      // @ts-ignore
       mockDatabase.users = response.data.results;
       mockDatabase.initialized = true;
 
